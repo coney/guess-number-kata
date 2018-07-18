@@ -7,10 +7,24 @@ class GuessNumberGame {
 
     test(input) {
         let value = input.split(" ");
-        // console.log(this.number, value);
+        if (!this.validateInput(value)) {
+            return "Wrong Input，Input again";
+        }
+
         let correctCount = this.getCorrectCount(value);
         let malPositionCount = this.getMalPositionCount(value);
         return this.generateOutput(correctCount, malPositionCount);
+    }
+
+    validateInput(value) {
+        if (value.length != 4) {
+            return false;
+        }
+        if (new Set(value).size !== value.length) {
+            return false;
+        }
+
+        return true;
     }
 
     getCorrectCount(value) {
@@ -39,10 +53,13 @@ function test(game, input) {
 // 5 6 7 8      0A0B                 all wrong
 // 4 3 2 1      0A4B                 4 numbers position wrong
 // 1 2 3 4      4A0B                 win, all correct
-
+// 1 1 2 3    Wrong Input，Input again
+// 1 2        Wrong Input，Input again
 test(game, '1 5 6 7');
 test(game, '2 4 7 8');
 test(game, '0 3 2 4');
 test(game, '5 6 7 8');
 test(game, '4 3 2 1');
 test(game, '1 2 3 4');
+test(game, '1 1 2 3');
+test(game, '1 2');
