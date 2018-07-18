@@ -1,0 +1,8 @@
+{
+  "name": "guess-number-kata",
+  "version": "0.0.1",
+  "dependencies": {},
+  "devDependencies": {
+    "jest": "^23.4.1"
+  }
+}

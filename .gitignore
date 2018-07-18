@@ -9,3 +9,5 @@ out
 .settings/
 .vscode/
 bin/
+node_modules
+.idea
