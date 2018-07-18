@@ -1,8 +1,9 @@
 class GuessNumberGame {
 
 
-    constructor() {
-        this.number = new Number(1234).toString().split("");
+    constructor(number) {
+        this.retry = 0;
+        this.answer = new Number(number).toString().split("");
     }
 
     test(input) {
@@ -10,6 +11,10 @@ class GuessNumberGame {
         if (!this.validateInput(value)) {
             return "Wrong Input，Input again";
         }
+        if (this.retry >= 6) {
+            return "Game Over, No Chance Left"
+        }
+        this.retry++;
 
         let correctCount = this.getCorrectCount(value);
         let malPositionCount = this.getMalPositionCount(value);
@@ -28,11 +33,11 @@ class GuessNumberGame {
     }
 
     getCorrectCount(value) {
-        return this.number.filter((val, idx) => val === value[idx]).length;
+        return this.answer.filter((val, idx) => val === value[idx]).length;
     }
 
     getMalPositionCount(value) {
-        return this.number.filter((val, idx) => val !== value[idx] && value.includes(val)).length;
+        return this.answer.filter((val, idx) => val !== value[idx] && value.includes(val)).length;
     }
 
     generateOutput(correctCount, malPositionCount) {
@@ -41,7 +46,6 @@ class GuessNumberGame {
 
 }
 
-let game = new GuessNumberGame();
 
 function test(game, input) {
     console.log(`Input:${input} Output:${game.test(input)}`)
@@ -55,11 +59,27 @@ function test(game, input) {
 // 1 2 3 4      4A0B                 win, all correct
 // 1 1 2 3    Wrong Input，Input again
 // 1 2        Wrong Input，Input again
-test(game, '1 5 6 7');
-test(game, '2 4 7 8');
-test(game, '0 3 2 4');
-test(game, '5 6 7 8');
-test(game, '4 3 2 1');
-test(game, '1 2 3 4');
-test(game, '1 1 2 3');
-test(game, '1 2');
+(function () {
+    let game = new GuessNumberGame(1234);
+
+    test(game, '1 5 6 7');
+    test(game, '2 4 7 8');
+    test(game, '0 3 2 4');
+    test(game, '5 6 7 8');
+    test(game, '4 3 2 1');
+    test(game, '1 2 3 4');
+    test(game, '1 1 2 3');
+    test(game, '1 2');
+}());
+
+(function () {
+    let game = new GuessNumberGame(1234);
+
+    test(game, '1 5 6 7');
+    test(game, '1 5 6 7');
+    test(game, '1 5 6 7');
+    test(game, '1 5 6 7');
+    test(game, '1 5 6 7');
+    test(game, '1 5 6 7');
+    test(game, '1 5 6 7');
+}());
