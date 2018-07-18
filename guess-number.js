@@ -1,9 +1,14 @@
+var shuffle = require('shuffle-array');
+
 class GuessNumberGame {
-
-
     constructor(number) {
         this.retry = 0;
-        this.answer = new Number(number).toString().split("");
+        this.answer = number === undefined ?  this.generateRandomNumber(): new Number(number).toString().split("");
+        console.log(`answer is ${this.answer}`)
+    }
+
+    generateRandomNumber() {
+        return shuffle("1234567890".split("").slice(0,4))
     }
 
     test(input) {
@@ -73,7 +78,7 @@ function test(game, input) {
 }());
 
 (function () {
-    let game = new GuessNumberGame(1234);
+    let game = new GuessNumberGame();
 
     test(game, '1 5 6 7');
     test(game, '1 5 6 7');
