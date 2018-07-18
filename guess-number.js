@@ -8,8 +8,12 @@ class GuessNumberGame {
     test(input) {
         let value = input.split(" ");
         console.log(this.number, value);
-        let correctCount = this.number.filter((val, idx) => val === value[idx]).length;
+        let correctCount = this.getCorrectCount(value);
         return this.generateOutput(correctCount, 0);
+    }
+
+    getCorrectCount(value) {
+        return this.number.filter((val, idx) => val === value[idx]).length;
     }
 
     generateOutput(correctCount, malPositionCount) {
@@ -18,4 +22,10 @@ class GuessNumberGame {
 }
 
 let game = new GuessNumberGame();
-console.log(game.test("1 2 3 4"))
+
+function test(game, input) {
+    console.log(`Input:${input} Output:${game.test(input)}`)
+}
+
+test(game, '1 2 3 4');
+test(game, '1 2 3 5');
