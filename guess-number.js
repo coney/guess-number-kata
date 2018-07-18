@@ -7,18 +7,24 @@ class GuessNumberGame {
 
     test(input) {
         let value = input.split(" ");
-        console.log(this.number, value);
+        // console.log(this.number, value);
         let correctCount = this.getCorrectCount(value);
-        return this.generateOutput(correctCount, 0);
+        let malPositionCount = this.getMalPositionCount(value);
+        return this.generateOutput(correctCount, malPositionCount);
     }
 
     getCorrectCount(value) {
         return this.number.filter((val, idx) => val === value[idx]).length;
     }
 
+    getMalPositionCount(value) {
+        return this.number.filter((val, idx) => val !== value[idx] && value.includes(val)).length;
+    }
+
     generateOutput(correctCount, malPositionCount) {
         return `${correctCount}A${malPositionCount}B`;
     }
+
 }
 
 let game = new GuessNumberGame();
@@ -27,5 +33,16 @@ function test(game, input) {
     console.log(`Input:${input} Output:${game.test(input)}`)
 }
 
+// 1 5 6 7      1A0B                 1 correct
+// 2 4 7 8      0A2B                 2 and 4 wrong position
+// 0 3 2 4      1A2B                 4 correct，2 and 3 wrong position
+// 5 6 7 8      0A0B                 all wrong
+// 4 3 2 1      0A4B                 4 numbers position wrong
+// 1 2 3 4      4A0B                 win, all correct
+
+test(game, '1 5 6 7');
+test(game, '2 4 7 8');
+test(game, '0 3 2 4');
+test(game, '5 6 7 8');
+test(game, '4 3 2 1');
 test(game, '1 2 3 4');
-test(game, '1 2 3 5');
